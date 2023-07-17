@@ -92,10 +92,9 @@ services:
     restart: always
   kg:
     image: kage
-    build: ../kage-mw-api/
+    build: ./repo/kage-mw-api/
     volumes:
-      - ../kage-mw-api/.env:/usr/src/app/.env
-      - ../kage-mw-api/data:/usr/src/app/data
+      - ./data/kg:/usr/src/app/data
     restart: always
   ht:
     image: han3_ji7_tsoo1_kian3
