@@ -1,0 +1,129 @@
+services:
+  tl:
+    image: thelounge
+    build: ./repo/thelounge-docker
+    ports:
+      - 7081:9001
+      - 7080:9000
+    environment:
+      INSP_CONNECT_HASH: ${INSP_CONNECT_HASH}
+      INSP_CONNECT_PASSWORD: ${INSP_CONNECT_PASSWORD}
+    volumes:
+      - ./data/tl/data:/var/opt/thelounge
+      - ./data/tl/themes:/usr/local/share/.config/yarn/global/node_modules/thelounge/public/themes
+    depends_on:
+      - irc
+      - ldap
+    restart: always
+  ldapreg:
+    image: ldapreg
+    build: ./repo/django-ldap-user-registration
+    ports:
+    - 7005:8000
+    environment:
+      ALLOWED_HOSTS: ${LDAP_REG_ALLOWED_HOSTS}
+      CSRF_TRUSTED_ORIGINS: ${LDAP_REG_CSRF_TRUSTED_ORIGINS}
+      EMAIL_HOST: ${EMAIL_HOST}
+      EMAIL_PORT: ${EMAIL_PORT}
+      EMAIL_HOST_USER: ${EMAIL_HOST_USER}
+      EMAIL_HOST_PASSWORD: ${EMAIL_HOST_PASSWORD}
+      EMAIL_USE_TLS: ${EMAIL_USE_TLS}
+    volumes:
+      - ./data/ldapreg/local_settings.py:/usr/src/app/django_ldap_user_registration/local_settings.py
+      # - ./data/ldapreg/db.sqlite3:/usr/src/app/db.sqlite3
+    depends_on:
+      - ldap
+    restart: always
+  ldapui:
+    image: dnknth/ldap-ui
+    ports:
+      - 7001:5000
+    links:
+      - ldap
+    environment:
+      LDAP_URL: ldap://ldap:1389/
+      BASE_DN: ${LDAP_ROOT}
+      BIND_PATTERN: cn=%s,${LDAP_ROOT}
+    restart: always
+  ldap:
+    image: docker.io/bitnami/openldap:2.6
+    environment:
+      LDAP_ROOT: ${LDAP_ROOT}
+      LDAP_ADMIN_USERNAME: ${LDAP_ADMIN_USERNAME}
+      LDAP_ADMIN_PASSWORD: ${LDAP_ADMIN_PASSWORD}
+    volumes:
+      - ./data/ldap/data:/bitnami/openldap
+    restart: always
+  irc:
+    image: inspircd/inspircd-docker:3
+    ports:
+      - 7097:6697
+    volumes:
+      - ./data/irc/conf.d:/inspircd/conf.d
+    depends_on:
+      - mw
+    # secrets:
+    #   - inspircd.crt
+    #   - inspircd.key
+    restart: always
+  mw:
+    image: mediawiki:1.39.3
+    build: ./repo/mediawiki-docker/1.39/apache
+    depends_on:
+      - db
+      - kg
+      - ht
+      - hj
+    ports:
+      - 7070:80
+    volumes:
+      - ./data/mw/skins:/var/www/html/skins
+      - ./data/mw/images:/var/www/html/images
+      - ./data/mw/repo/MediaWiki-HanjaConverter:/var/www/html/extensions/HanjaConverter
+      - ./data/mw/repo/MediaWiki-KAGE:/var/www/html/extensions/KAGE
+      - ./data/mw/repo/MediaWiki-i18n/ko-kore.json:/var/www/html/languages/i18n/ko-kore.json
+      - ./data/mw/repo/MediaWiki-i18n/MessagesKo_kore.php:/var/www/html/languages/messages/MessagesKo_kore.php
+      - ./data/mw/repo/mediawiki-extensions-PluggableAuth:/var/www/html/extensions/PluggableAuth
+      - ./data/mw/repo/mediawiki-extensions-LDAPProvider:/var/www/html/extensions/LDAPProvider
+      - ./data/mw/repo/mediawiki-extensions-LDAPAuthentication2:/var/www/html/extensions/LDAPAuthentication2
+      - ./data/mw/repo/mediawiki-extensions-LDAPAuthorization:/var/www/html/extensions/LDAPAuthorization
+      - ./data/mw/ldapprovider.json:/var/www/ldapprovider.json
+      # - ./data/mw/LocalSettings.php:/var/www/html/LocalSettings.php
+    restart: always
+  kg:
+    image: kage
+    build: ../kage-mw-api/
+    volumes:
+      - ../kage-mw-api/.env:/usr/src/app/.env
+      - ../kage-mw-api/data:/usr/src/app/data
+    restart: always
+  ht:
+    image: han3_ji7_tsoo1_kian3
+    build: ./repo/han3_ji7_tsoo1_kian3_WM
+    ports:
+      - 8080:8080
+    restart: always
+  hj:
+    image: hanja-reading
+    build: ./repo/hanja-reading
+    restart: always
+  db:
+    image: mariadb:10.6
+    volumes:
+      - ./data/db/data:/var/lib/mysql
+    environment:
+      MYSQL_DATABASE: wiki
+      MYSQL_USER: wiki
+      MYSQL_RANDOM_ROOT_PASSWORD: yes
+    restart: always
+networks:
+  default:
+    driver: bridge
+    ipam:
+      config:
+        - subnet: 10.7.0.0/16
+# secrets:
+#   inspircd.crt:
+#     file: ./data/ssl/inspircd.crt
+#   inspircd.key:
+#     file: ./data/ssl/inspircd.key
