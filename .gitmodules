@@ -1,0 +1,18 @@
+[submodule "repo/django-ldap-user-registration"]
+	path = repo/django-ldap-user-registration
+	url = https://github.com/Lee0701/django-ldap-user-registration.git
+[submodule "repo/han3_ji7_tsoo1_kian3_WM"]
+	path = repo/han3_ji7_tsoo1_kian3_WM
+	url = https://github.com/Lee0701/han3_ji7_tsoo1_kian3_WM.git
+[submodule "repo/hanja-reading"]
+	path = repo/hanja-reading
+	url = https://github.com/Lee0701/hanja-reading.git
+[submodule "repo/kage-mw-api"]
+	path = repo/kage-mw-api
+	url = https://github.com/Lee0701/kage-mw-api.git
+[submodule "repo/mediawiki-docker"]
+	path = repo/mediawiki-docker
+	url = https://github.com/Lee0701/mediawiki-docker.git
+[submodule "repo/thelounge-docker"]
+	path = repo/thelounge-docker
+	url = https://github.com/Lee0701/thelounge-docker.git
