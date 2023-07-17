@@ -16,3 +16,24 @@
 [submodule "repo/thelounge-docker"]
 	path = repo/thelounge-docker
 	url = https://github.com/Lee0701/thelounge-docker.git
+[submodule "data/mw/repo/MediaWiki-HanjaConverter"]
+	path = data/mw/repo/MediaWiki-HanjaConverter
+	url = https://github.com/Lee0701/MediaWiki-HanjaConverter.git
+[submodule "data/mw/repo/MediaWiki-KAGE"]
+	path = data/mw/repo/MediaWiki-KAGE
+	url = https://github.com/Lee0701/MediaWiki-KAGE.git
+[submodule "data/mw/repo/MediaWiki-i18n"]
+	path = data/mw/repo/MediaWiki-i18n
+	url = https://github.com/Lee0701/MediaWiki-i18n.git
+[submodule "data/mw/repo/mediawiki-extensions-LDAPAuthentication2"]
+	path = data/mw/repo/mediawiki-extensions-LDAPAuthentication2
+	url = https://github.com/wikimedia/mediawiki-extensions-LDAPAuthentication2.git
+[submodule "data/mw/repo/mediawiki-extensions-LDAPAuthorization"]
+	path = data/mw/repo/mediawiki-extensions-LDAPAuthorization
+	url = https://github.com/wikimedia/mediawiki-extensions-LDAPAuthorization.git
+[submodule "data/mw/repo/mediawiki-extensions-LDAPProvider"]
+	path = data/mw/repo/mediawiki-extensions-LDAPProvider
+	url = https://github.com/wikimedia/mediawiki-extensions-LDAPProvider.git
+[submodule "data/mw/repo/mediawiki-extensions-PluggableAuth"]
+	path = data/mw/repo/mediawiki-extensions-PluggableAuth
+	url = https://github.com/wikimedia/mediawiki-extensions-PluggableAuth.git
