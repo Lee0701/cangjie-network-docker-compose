@@ -1,6 +1,16 @@
 .env
 docker-compose.yml
 
+data/irc/conf.d/
+data/mb/local_settings.py
+data/mw/LocalSettings.php
+data/mw/ldapprovider.json
+dta/mw/images/
+data/mw/skins/
+data/db/
+data/tl/
+data/ssl/
+
 *~
 
 # temporary files which can be created if a process still has a handle open of a deleted file
