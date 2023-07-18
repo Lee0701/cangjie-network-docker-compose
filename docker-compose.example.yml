@@ -34,7 +34,7 @@ services:
     depends_on:
       - ldap
     restart: always
-  ldapui:
+  adm:
     image: dnknth/ldap-ui
     ports:
       - 7001:5000
