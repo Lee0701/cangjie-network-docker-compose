@@ -15,8 +15,8 @@ services:
       - irc
       - ldap
     restart: always
-  ldapreg:
-    image: ldapreg
+  mb:
+    image: mb
     build: ./repo/django-ldap-user-registration
     ports:
     - 7005:8000
@@ -29,8 +29,8 @@ services:
       EMAIL_HOST_PASSWORD: ${EMAIL_HOST_PASSWORD}
       EMAIL_USE_TLS: ${EMAIL_USE_TLS}
     volumes:
-      - ./data/ldapreg/local_settings.py:/usr/src/app/django_ldap_user_registration/local_settings.py
-      # - ./data/ldapreg/db.sqlite3:/usr/src/app/db.sqlite3
+      - ./data/mb/local_settings.py:/usr/src/app/django_ldap_user_registration/local_settings.py
+      # - ./data/mb/db.sqlite3:/usr/src/app/db.sqlite3
     depends_on:
       - ldap
     restart: always
