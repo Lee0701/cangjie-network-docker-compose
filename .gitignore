@@ -2,7 +2,10 @@
 docker-compose.yml
 
 data/irc/conf.d/
+data/irc/motd/
+data/ldap/data
 data/mb/local_settings.py
+data/mb/db.sqlite3
 data/mw/LocalSettings.php
 data/mw/ldapprovider.json
 dta/mw/images/
